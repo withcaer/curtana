@@ -1,6 +1,6 @@
 [![`curtana` on crates.io](https://img.shields.io/crates/v/curtana)](https://crates.io/crates/curtana)
 [![`curtana` on docs.rs](https://img.shields.io/docsrs/curtana)](https://docs.rs/curtana/)
-[![`curtana` is MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/with-caer/curtana/blob/main/LICENSE.txt)
+[![`curtana` is MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/withcaer/curtana/blob/main/LICENSE.txt)
 
 An accessible low-overhead wrapper over [`llama.cpp`](https://github.com/ggml-org/llama.cpp)
 powered by [`llama-cpp-2`](https://github.com/utilityai/llama-cpp-rs/tree/main), supporting
@@ -73,6 +73,6 @@ assert!(distance_b < distance_c);
 
 ## License
 
-Copyright © 2025 With Caer, LLC.
+Copyright © 2025 - 2026 With Caer, LLC.
 
-Licensed under the MIT license. Refer to [the license file](https://github.com/with-caer/curtana/blob/main/LICENSE.txt) for more info.
+Licensed under the MIT license. Refer to [the license file](https://github.com/withcaer/curtana/blob/main/LICENSE.txt) for more info.

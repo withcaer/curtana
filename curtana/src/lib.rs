@@ -5,15 +5,13 @@ use std::{
 };
 
 use llama_cpp_2::{
-    ApplyChatTemplateError, ChatTemplateError, DecodeError, EmbeddingsError, LLamaCppError,
-    LlamaContextLoadError, LlamaModelLoadError, LogOptions, NewLlamaChatMessageError,
-    StringToTokenError, TokenToStringError,
+    ApplyChatTemplateError, ChatTemplateError, DecodeError, EmbeddingsError, LlamaContextLoadError,
+    LlamaCppError, LlamaModelLoadError, LogOptions, NewLlamaChatMessageError, StringToTokenError,
+    TokenToStringError,
     context::params::LlamaContextParams,
     llama_backend::LlamaBackend,
     llama_batch::{BatchAddError, LlamaBatch},
-    model::{
-        AddBos, LlamaChatMessage, LlamaChatTemplate, LlamaModel, Special, params::LlamaModelParams,
-    },
+    model::{AddBos, LlamaChatMessage, LlamaChatTemplate, LlamaModel, params::LlamaModelParams},
     sampling::LlamaSampler,
     send_logs_to_tracing,
 };
@@ -198,7 +196,9 @@ impl ChatModel {
                 break;
             }
 
-            let output_bytes = self.model.token_to_bytes(token, Special::Tokenize)?;
+            let output_bytes =
+                self.model
+                    .token_to_piece_bytes(token, DEFAULT_CONTEXT_LENGTH, true, None)?;
             output.write_all(&output_bytes)?;
             output.flush()?;
 
@@ -344,8 +344,8 @@ pub enum Error {
     IoError(String),
 }
 
-impl From<LLamaCppError> for Error {
-    fn from(value: LLamaCppError) -> Self {
+impl From<LlamaCppError> for Error {
+    fn from(value: LlamaCppError) -> Self {
         Self::InternalNativeError(value.to_string())
     }
 }
@@ -427,6 +427,14 @@ mod tests {
     /// From: https://huggingface.co/nomic-ai/nomic-embed-text-v1.5-GGUF
     ///       wget https://huggingface.co/nomic-ai/nomic-embed-text-v1.5-GGUF/resolve/main/nomic-embed-text-v1.5.f16.gguf
     const TEXT_EMBEDDING_MODEL: &str = "../nomic-embed-text-v1.5.f16.gguf";
+
+    // From: https://huggingface.co/ggml-org/embeddinggemma-300M-qat-q4_0-GGUF
+    //.      wget https://huggingface.co/ggml-org/embeddinggemma-300M-qat-q4_0-GGUF/resolve/main/embeddinggemma-300M-qat-Q4_0.gguf
+    // const TEXT_EMBEDDING_MODEL: &str = "../embeddinggemma-300M-qat-Q4_0.gguf";
+
+    // From: https://huggingface.co/second-state/All-MiniLM-L6-v2-Embedding-GGUF/resolve/main/all-MiniLM-L6-v2-ggml-model-f16.gguf
+    //       wget https://huggingface.co/second-state/All-MiniLM-L6-v2-Embedding-GGUF/resolve/main/all-MiniLM-L6-v2-ggml-model-f16.gguf
+    // const TEXT_EMBEDDING_MODEL: &str = "../all-MiniLM-L6-v2-ggml-model-f16.gguf";
 
     #[test]
     fn chat() {

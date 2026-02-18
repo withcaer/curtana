@@ -8,7 +8,7 @@ members = [
 # can be inherited by workspace members.
 [workspace.package]
 edition = "2024"
-repository = "https://github.com/with-caer/curtana"
+repository = "https://github.com/withcaer/curtana"
 license = "MIT"
 authors = [
     "With Caer, LLC <with@caer.cc>",
